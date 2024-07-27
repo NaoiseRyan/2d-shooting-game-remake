@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://cxnn2c6vlfu4w"]
+
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_7s17d"]
+[ext_resource type="PackedScene" uid="uid://bqyxi4oxvr4lm" path="res://Scenes/player.tscn" id="1_bwg32"]
+[ext_resource type="Texture2D" uid="uid://kuk7k08wqtw4" path="res://assets/background/background.png" id="2_gaut4"]
+[ext_resource type="PackedScene" uid="uid://cdldutdb0u75y" path="res://Scenes/hud.tscn" id="3_go0ty"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_objwf"]
+atlas = ExtResource("2_gaut4")
+region = Rect2(0, 0, 1280, 720)
+
+[sub_resource type="Curve2D" id="Curve2D_j3wei"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -64, -64, 0, 0, 0, 0, 1344, -64, 0, 0, 0, 0, 1344, 768, 0, 0, 0, 0, -64, 768, 0, 0, 0, 0, -64, -64)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_wf63l"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 96, 96, 0, 0, 0, 0, 1184, 96, 0, 0, 0, 0, 1184, 624, 0, 0, 0, 0, 96, 624, 0, 0, 0, 0, 96, 96)
+}
+point_count = 5
+
+[node name="Main" type="Node"]
+script = ExtResource("1_7s17d")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("AtlasTexture_objwf")
+
+[node name="player" parent="." instance=ExtResource("1_bwg32")]
+position = Vector2(404, 284)
+
+[node name="hud" parent="." instance=ExtResource("3_go0ty")]
+
+[node name="playerSpawnPoint" type="Marker2D" parent="." groups=["player_spawn_point"]]
+position = Vector2(766, 429)
+
+[node name="enemyNodes" type="Node" parent="."]
+
+[node name="enemyOneSpawnTimer" type="Timer" parent="enemyNodes"]
+
+[node name="enemyTwoSpawnTimer" type="Timer" parent="enemyNodes"]
+
+[node name="enemyOnePath" type="Path2D" parent="enemyNodes"]
+curve = SubResource("Curve2D_j3wei")
+
+[node name="enemyOneSpawnLocation" type="PathFollow2D" parent="enemyNodes/enemyOnePath"]
+position = Vector2(-64, -64)
+
+[node name="enemyTwoPath" type="Path2D" parent="enemyNodes"]
+curve = SubResource("Curve2D_wf63l")
+
+[node name="enemyTwoSpawnLocation" type="PathFollow2D" parent="enemyNodes/enemyTwoPath"]
+position = Vector2(96, 96)
+
+[node name="RushModeTimer" type="Timer" parent="enemyNodes"]
+wait_time = 8.0
+one_shot = true
+
+[connection signal="game_over" from="." to="hud" method="_on_main_game_over"]
+[connection signal="game_start" from="." to="." method="_on_game_start"]
+[connection signal="game_start" from="." to="player" method="_on_main_game_start"]
+[connection signal="rush_mode_end" from="." to="." method="_on_rush_mode_end"]
+[connection signal="rush_mode_start" from="." to="." method="_on_rush_mode_start"]
+[connection signal="update_score_hud" from="." to="hud" method="_on_main_update_score_hud"]
+[connection signal="health_changed" from="player" to="hud" method="update_healthbar"]
+[connection signal="player_die" from="player" to="." method="_on_player_player_die"]
+[connection signal="timeout" from="enemyNodes/enemyOneSpawnTimer" to="." method="_on_enemy_one_spawn_timer_timeout"]
+[connection signal="timeout" from="enemyNodes/RushModeTimer" to="." method="_on_rush_mode_timer_timeout"]

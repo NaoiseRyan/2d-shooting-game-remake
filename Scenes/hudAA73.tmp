@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdldutdb0u75y"]
+
+[ext_resource type="Script" path="res://Scenes/hud.gd" id="1_plhqy"]
+[ext_resource type="Texture2D" uid="uid://12sggl8ain86" path="res://assets/GUI/healthBar.png" id="2_u8kvw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nksli"]
+atlas = ExtResource("2_u8kvw")
+region = Rect2(0, 0, 210, 189.47)
+filter_clip = true
+
+[node name="hud" type="CanvasLayer"]
+script = ExtResource("1_plhqy")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 1098.0
+offset_right = 1268.0
+offset_bottom = 153.0
+texture = SubResource("AtlasTexture_nksli")
+expand_mode = 1
+stretch_mode = 1

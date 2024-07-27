@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdldutdb0u75y"]
+
+[ext_resource type="Script" path="res://Scenes/hud.gd" id="1_plhqy"]
+[ext_resource type="Texture2D" uid="uid://cxh7vwfrmtevi" path="res://assets/GUI/lowHealth.png" id="2_py1gx"]
+[ext_resource type="Texture2D" uid="uid://12sggl8ain86" path="res://assets/GUI/healthBar.png" id="2_u8kvw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nksli"]
+atlas = ExtResource("2_u8kvw")
+region = Rect2(0, 0, 210, 190)
+filter_clip = true
+
+[node name="hud" type="CanvasLayer"]
+script = ExtResource("1_plhqy")
+
+[node name="lowHealthGradient" type="TextureRect" parent="."]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_py1gx")
+
+[node name="HealthBar" type="TextureRect" parent="."]
+offset_left = 1098.0
+offset_right = 1268.0
+offset_bottom = 153.0
+texture = SubResource("AtlasTexture_nksli")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="DeadMessage" type="Label" parent="."]
+visible = false
+offset_left = 378.0
+offset_top = 266.0
+offset_right = 626.0
+offset_bottom = 434.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 60
+text = "Dead..... lmao"
+
+[node name="ScoreMessage" type="Label" parent="."]
+offset_left = 79.0
+offset_top = 56.0
+offset_right = 248.0
+offset_bottom = 119.0
+theme_override_font_sizes/font_size = 45
+text = "Score:"
+
+[node name="ScoreNumber" type="Label" parent="ScoreMessage"]
+layout_mode = 0
+offset_left = 141.0
+offset_right = 310.0
+offset_bottom = 63.0
+theme_override_font_sizes/font_size = 45
+text = "0"
