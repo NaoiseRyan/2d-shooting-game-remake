@@ -8,6 +8,8 @@ const DAMAGE = 2
 const SCORE_VALUE = 200
 var direction
 
+var rush_mode = false
+
 var attacking = false
 
 var path_follow_ref
@@ -16,11 +18,17 @@ var path_follow_ref
 
 func _physics_process(delta):
 	path_follow_ref.progress += SPEED
+	if rush_mode:
+		path_follow_ref.progress += 5
 	velocity = self.position - path_follow_ref.position
 	self.position = path_follow_ref.position
 
 func _process(delta):
 	animationHandler()
+
+func _ready():
+	get_parent().rush_mode_start.connect(rush_mode_start)
+	get_parent().rush_mode_end.connect(rush_mode_end)
 
 func animationHandler():
 	if !attacking:
@@ -73,3 +81,9 @@ func get_is_collision_active():
 
 func record_path_follow(ref):
 	path_follow_ref = ref
+
+func rush_mode_start():
+	rush_mode = true
+	
+func rush_mode_end():
+	rush_mode = false

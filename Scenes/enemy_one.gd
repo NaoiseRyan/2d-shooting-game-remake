@@ -10,9 +10,13 @@ const DAMAGE = 1
 const SCORE_VALUE = 100
 var direction
 
+var rush_mode = false
+
 
 func _ready():
 	player_ref = get_player_reference()
+	get_parent().rush_mode_start.connect(rush_mode_start)
+	get_parent().rush_mode_end.connect(rush_mode_end)
 
 func _process(delta):
 	animationHandler()
@@ -21,6 +25,8 @@ func _physics_process(delta):
 	if player_ref != null:
 		var player_position = player_ref.position
 		velocity = (player_position - position).normalized() * speed
+		if rush_mode:
+			velocity *= 2
 		
 		move_and_slide()
 
@@ -76,3 +82,9 @@ func get_is_collision_active():
 		return_var = true
 	return return_var
 
+
+func rush_mode_start():
+	rush_mode = true
+	
+func rush_mode_end():
+	rush_mode = false

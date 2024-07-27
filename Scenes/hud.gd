@@ -21,3 +21,6 @@ func _on_main_game_over():
 func _on_main_update_score_hud(score):
 	score = str(score)
 	$ScoreMessage/ScoreNumber.text = score 
+
+signal press_button
+

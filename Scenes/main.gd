@@ -40,6 +40,8 @@ func _on_enemy_one_spawn_timer_timeout():
 	var new_enemy_one_position = enemy_spawn_location.position
 	new_enemy_one.position = new_enemy_one_position
 	new_enemy_one.enemy_one_update_score.connect(update_score)
+	if rush_mode_active:
+		new_enemy_one.rush_mode_start()
 
 func _on_game_start():
 	$enemyNodes/enemyOneSpawnTimer.start()
@@ -76,7 +78,7 @@ func update_background():
 
 func _on_rush_mode_start():
 	$Background.texture.region = Rect2(0, bg_texture_size.y * 3, bg_texture_size.x, bg_texture_size.y)
-	$enemyNodes/RushModeTimer.start()
+	$enemyNodes/RushModeTimer.start()	
 
 func _on_rush_mode_end():
 	kills_until_rush_mode = KILLS_UNTIL_RUSH_MODE_MAX
@@ -95,3 +97,7 @@ func spawn_enemy_two():
 		enemy_spawn_location.progress_ratio = randf()
 		new_enemy_two.position = enemy_spawn_location.position
 		new_enemy_two.enemy_two_update_score.connect(update_score)
+		if rush_mode_active:
+			new_enemy_two.rush_mode_start()
+
+
