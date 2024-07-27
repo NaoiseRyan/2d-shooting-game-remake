@@ -75,3 +75,4 @@ func get_is_collision_active():
 	else:
 		return_var = true
 	return return_var
+

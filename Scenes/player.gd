@@ -91,6 +91,8 @@ func _on_area_2d_body_entered(body):
 		$iFrameDebounce.start()
 		body.die()
 		var new_health = health - body.DAMAGE
+		if new_health < 0:
+			new_health = 0
 		health_changed.emit(new_health)
 
 

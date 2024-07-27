@@ -89,9 +89,9 @@ func spawn_enemy_two():
 	if enemy_two_array.size() < 2:
 		print("less then 3")
 		var new_enemy_two = enemyTwoResource.instantiate()
-		add_child(new_enemy_two)
 		var enemy_spawn_location = $enemyNodes/enemyTwoPath/enemyTwoSpawnLocation
+		new_enemy_two.record_path_follow(enemy_spawn_location)
+		add_child(new_enemy_two)
 		enemy_spawn_location.progress_ratio = randf()
 		new_enemy_two.position = enemy_spawn_location.position
-
-#a
+		new_enemy_two.enemy_two_update_score.connect(update_score)
